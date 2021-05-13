@@ -21,7 +21,7 @@ k = 100
 
 
 def acc(i, j):
-    l = 9
+    l = 9 # GM, M은 태양질량
     value = l / (i ** 2 + j ** 2)
     len = (i ** 2 + j ** 2) ** (1 / 2)
     vector = (-i, -j)
@@ -37,7 +37,7 @@ def allacc(i):
         else:
             xx = x[j] - x[i]
             yy = y[j] - y[i]
-            l = 9*m[j]
+            l = 9*m[j] #Gm m은 j번째 행성 
             value = l / (xx ** 2 + yy ** 2)
             len = (xx ** 2 + yy ** 2) ** (1 / 2)
             Ax, Ay = (-xx * value / len, -yy * value / len)
