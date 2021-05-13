@@ -19,7 +19,7 @@ k = 100
 
 
 def acc(i, j):
-    l = 9
+    l = 9 #이게 GM값임
     value = l / (i ** 2 + j ** 2)
     len = (i ** 2 + j ** 2) ** (1 / 2)
     vector = (-i, -j)
