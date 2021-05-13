@@ -11,6 +11,8 @@ vx = [0, 0, 0, 0, 0, 0, 0, 0, 0]
 vy = [0, 4.8, 3.59, 3, 2.43, 1.34, 0.95, 0.67, 0.55]
 Ax = [0, 0, 0, 0, 0, 0, 0, 0, 0]
 Ay = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+m = [1, 1.66e-07, 2.647e-06, 3.00e-06, 3.22e-07, 0.001, 0.0003, 4.367e-05, 5.15e-05]
+
 dt = 0.1
 
 plt.xlim(-50, 50)
@@ -24,39 +26,32 @@ def acc(i, j):
     len = (i ** 2 + j ** 2) ** (1 / 2)
     vector = (-i, -j)
     Ax, Ay = (-i * value / len, -j * value / len)
-    # Ax, Ay = (-i*value, -j*value)
     return (Ax, Ay)
 
-def allacc(x, y):
-    ax2 = []
-    ay2 = []
-    for i in range(1, 9):
-        Axx = 0
-        Ayy = 0
-        for j in range(1, 9):
-            if i != j:
-                c = x[j] - x[i]
-                d = y[j] - y[i]
-                l = 9
-                value = l / (c ** 2 + d ** 2)
-                len = (c ** 2 + d ** 2) ** (1 / 2)
-                #vector = (-c, -d)
-                Ax, Ay = (-c * value / len, -d * value / len)
-                Axx += Ax
-                Ayy += Ay
-            else:
-                continue
-        ax2.append(Axx)
-        ay2.append(Ayy)
-    return [ax2, ay2]
+def allacc(i):
+    SAx = 0
+    SAy = 0
+    for j in range(1,8):
+        if i == j:
+            continue
+        else:
+            xx = x[j] - x[i]
+            yy = y[j] - y[i]
+            l = 9*m[j]
+            value = l / (xx ** 2 + yy ** 2)
+            len = (xx ** 2 + yy ** 2) ** (1 / 2)
+            Ax, Ay = (-xx * value / len, -yy * value / len)
+            SAx += Ax
+            SAy += Ay
+    return (SAx, SAy)
 
 
 def animation(i):
     for i in range(1, 9):
         a, b = acc(x[i], y[i])
-        racclist = allacc(x, y)
-        Ax[i] = a + racclist[1][i-1]
-        Ay[i] = b + racclist[2][i-1]
+        c, d = allacc(i)
+        Ax[i] = a + c
+        Ay[i] = b + d
         vx[i] += Ax[i] * dt
         vy[i] += Ay[i] * dt
         x[i] += vx[i] * dt
